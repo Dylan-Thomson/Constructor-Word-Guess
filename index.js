@@ -9,6 +9,10 @@ const testWords = ["apple", "banana", "orange"];
 
 // select random word from array
 // remove this word from the array
+let index = Math.floor(Math.random() * testWords.length - 1) + 1;
+let currentWord = testWords.splice(index, 1);
+console.log(currentWord);
+console.log(testWords);
 // prompt user to guess a letter and call guessletter
 //  If guess is incorrect subtract from remaining guessses and display incorrect
 //      Check if user has run out of guesses, get another random word and display correct/incorrect words so far
