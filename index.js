@@ -1,18 +1,48 @@
 const Word = require("./Word");
-const Inquirer = require("inquirer");
-
-// const word = new Word("testword");
-// word.guessLetter("W");
-// console.log(word.getWord());
+const inquirer = require("inquirer");
 
 const testWords = ["apple", "banana", "orange"];
 
-// select random word from array
-// remove this word from the array
-let index = Math.floor(Math.random() * testWords.length - 1) + 1;
-let currentWord = testWords.splice(index, 1);
-console.log(currentWord);
-console.log(testWords);
+function WordGuess(wordList) {
+    this.wordList = wordList;
+    this.guessesRemaining = 10;
+    this.guesses = [];
+
+    // Get random word and remove from word list
+    this.nextWord = function() {
+        if(wordList.length > 0) {
+            this.index = Math.floor(Math.random() * this.wordList.length - 1) + 1;
+            this.currentWord = new Word(this.wordList.splice(this.index, 1)[0]);
+            console.log(this.currentWord.getWord());
+            return this.currentWord;
+        }
+        console.log("Out of words");
+        return false;
+    }
+
+    this.promptForGuess = function() {
+        inquirer.prompt([
+            {
+                name: "guess",
+                message: "Guess a letter",
+                type: "input",
+                validate: function(input) {
+                    return input.match(/[a-z]/i) && input.length === 1;
+                }
+            }
+        ]).then(input => {
+            console.log(input.guess);
+        });
+    }
+}
+
+let game = new WordGuess(testWords);
+game.nextWord();
+game.nextWord();
+game.nextWord();
+game.nextWord();
+// game.promptForGuess();
+
 // prompt user to guess a letter and call guessletter
 //  If guess is incorrect subtract from remaining guessses and display incorrect
 //      Check if user has run out of guesses, get another random word and display correct/incorrect words so far
