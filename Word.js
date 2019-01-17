@@ -11,11 +11,6 @@ function Word(word) {
     this.getWord = function() {
         // Calls our toString on each letter object
         return this.word.join("");
-        let wordString = "";
-        this.word.forEach(letter => {
-            wordString += letter.getLetter();
-        });
-        return wordString;
     }
 
     // Test a guess on all Letters in Word
