@@ -26,22 +26,58 @@ function WordGuess(wordList) {
                 name: "guess",
                 message: "Guess a letter",
                 type: "input",
-                validate: function(input) {
-                    return input.match(/[a-z]/i) && input.length === 1;
+                validate: input => {
+                    if(input.match(/[a-z]/i) && input.length === 1) {
+                        if(this.guesses.includes(input)) {
+                            return "Already guessed!";
+                        }
+                        return true;
+                    }
+                    return "Please enter a single alphabetical letter.";
                 }
             }
         ]).then(input => {
-            console.log(input.guess);
+            this.guesses.push(input.guess);
+
+            if(this.currentWord.guessLetter(input.guess)) {
+                console.log("Correct!");
+            }
+            else {
+                this.guessesRemaining--;
+                console.log("Wrong!!!!\nGuesses Remaining: " + this.guessesRemaining);
+                if(this.guessesRemaining <= 0) {
+                    console.log("Game over!");
+                    // TODO prompt to play again
+                    return
+                }
+            }
+
+            console.log(this.currentWord.getWord());
+
+
+            if(!this.currentWord.isGuessed()) {
+                this.promptForGuess();
+            }
+            else {
+                if(this.wordList.length === 0) {
+                    console.log("You won!");
+                    // TODO prompt to play again
+                }
+                else {
+                    this.guessesRemaining = 10;
+                    this.guesses = [];
+                    console.log("Next word!");
+                    this.nextWord();
+                    this.promptForGuess();
+                }
+            }
         });
     }
 }
 
 let game = new WordGuess(testWords);
 game.nextWord();
-game.nextWord();
-game.nextWord();
-game.nextWord();
-// game.promptForGuess();
+game.promptForGuess();
 
 // prompt user to guess a letter and call guessletter
 //  If guess is incorrect subtract from remaining guessses and display incorrect

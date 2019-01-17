@@ -17,9 +17,24 @@ function Word(word) {
 
     // Test a guess on all Letters in Word
     this.guessLetter = function(guess) {
+        let isCorrect = false;
         this.word.forEach(letter => {
-            letter.compare(guess);
+            if(letter.compare(guess)) {
+                isCorrect = true;
+            }
         });
+        return isCorrect;
+    }
+
+    this.isGuessed = function() {
+        let wordGuessed = true;
+        this.word.forEach(letter => {
+            if(!letter.isGuessed) {
+                wordGuessed = false;
+                return;
+            }
+        });
+        return wordGuessed;
     }
 }
 

@@ -1,17 +1,19 @@
 function Letter(letter) {
     this.letter = letter;
-    this.guessed = false;
+    this.isGuessed = false;
 
-    // Returns letter if guessed, otherwise return placeholder
+    // Returns letter if isGuessed, otherwise return placeholder
     this.getLetter = function() {
-        return this.guessed ? this.letter : "_";
+        return this.isGuessed ? this.letter : "_";
     }
 
-    // Set guessed to true if guess equals letter
+    // Set isGuessed to true if guess equals letter
     this.compare = function(guess) {
         if(this.letter === guess.toLowerCase()) {
-            this.guessed = true;
+            this.isGuessed = true;
+            return true;
         }
+        return false;
     }
 }
 
