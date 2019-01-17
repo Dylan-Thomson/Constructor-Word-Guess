@@ -13,11 +13,16 @@ function WordGuess(wordList) {
         if(wordList.length > 0) {
             this.index = Math.floor(Math.random() * this.wordList.length - 1) + 1;
             this.currentWord = new Word(this.wordList.splice(this.index, 1)[0]);
-            console.log(this.currentWord.getWord());
+            // console.log(this.currentWord.getWord());
+            this.displayCurrentWord();
             return this.currentWord;
         }
         console.log("Out of words");
         return false;
+    }
+
+    this.displayCurrentWord = function() {
+        console.log(this.currentWord.getWord().split("").join(" ").trim());
     }
 
     this.promptForGuess = function() {
@@ -52,7 +57,7 @@ function WordGuess(wordList) {
                 }
             }
 
-            console.log(this.currentWord.getWord());
+            this.displayCurrentWord();
 
 
             if(!this.currentWord.isGuessed()) {

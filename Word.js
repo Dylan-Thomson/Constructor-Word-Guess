@@ -1,5 +1,6 @@
 const Letter = require("./Letter");
 
+// TODO ALLOW FOR SPACES IN WORDS
 function Word(word) {
     // Create Letter object for each letter in word and store as array
     this.word = word.split("").map(letter => {
@@ -10,9 +11,9 @@ function Word(word) {
     this.getWord = function() {
         let wordString = "";
         this.word.forEach(letter => {
-            wordString += letter.getLetter() + " ";
+            wordString += letter.getLetter();
         });
-        return wordString.trim();
+        return wordString;
     }
 
     // Test a guess on all Letters in Word
@@ -27,6 +28,7 @@ function Word(word) {
     }
 
     this.isGuessed = function() {
+        // return !this.getWord().includes("_");
         let wordGuessed = true;
         this.word.forEach(letter => {
             if(!letter.isGuessed) {
