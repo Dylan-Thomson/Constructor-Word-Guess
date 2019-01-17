@@ -9,6 +9,8 @@ function Word(word) {
 
     // Get string containing placeholders and correctly guessed Letters
     this.getWord = function() {
+        // Calls our toString on each letter object
+        return this.word.join("");
         let wordString = "";
         this.word.forEach(letter => {
             wordString += letter.getLetter();

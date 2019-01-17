@@ -15,6 +15,10 @@ function Letter(letter) {
         }
         return false;
     }
+
+    this.toString = function() {
+        return this.getLetter();
+    }
 }
 
 function testLetter() {
