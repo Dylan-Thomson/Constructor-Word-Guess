@@ -3,7 +3,7 @@ function Letter(letter) {
     this.isGuessed = false;
 
     // Returns letter if isGuessed, otherwise return placeholder
-    this.getLetter = function() {
+    this.toString = function() {
         return this.isGuessed ? this.letter : "_";
     }
 
@@ -14,10 +14,6 @@ function Letter(letter) {
             return true;
         }
         return false;
-    }
-
-    this.toString = function() {
-        return this.getLetter();
     }
 }
 
