@@ -1,5 +1,6 @@
 const Word = require("./Word");
 const inquirer = require("inquirer");
+const colors = require("colors");
 
 const testWords = ["apple", "banana", "orange"];
 
@@ -16,7 +17,7 @@ function WordGuess(wordList) {
             this.displayCurrentWord();
             return this.currentWord;
         }
-        console.log("Out of words");
+        console.log("Out of words".red);
         return false;
     }
 
@@ -35,25 +36,25 @@ function WordGuess(wordList) {
                 validate: input => {
                     if(input.match(/[a-z]/i) && input.length === 1) {
                         if(this.guesses.includes(input)) {
-                            return "Already guessed!";
+                            return "Already guessed!".red;
                         }
                         return true;
                     }
-                    return "Please enter a single alphabetical letter.";
+                    return "Please enter a single alphabetical letter.".red;
                 }
             }
         ]).then(input => {
             this.guesses.push(input.guess);
 
             if(this.currentWord.guessLetter(input.guess)) {
-                console.log("Correct!");
+                console.log("Correct!".green);
             }
             else {
                 this.guessesRemaining--;
-                console.log("Wrong!!!!\nGuesses Remaining: " + this.guessesRemaining);
+                console.log("Wrong!!!!".red + "\nGuesses Remaining: " + this.guessesRemaining);
                 if(this.guessesRemaining <= 0) {
-                    console.log("Game over!");
-                    // TODO prompt to play again
+                    console.log("Game over!".red);
+                    // TODO prompt to play again GAME OVER FUNCTION
                     return
                 }
             }
@@ -66,13 +67,13 @@ function WordGuess(wordList) {
             }
             else {
                 if(this.wordList.length === 0) {
-                    console.log("You won!");
-                    // TODO prompt to play again
+                    console.log("You won!".rainbow);
+                    // TODO prompt to play again GAME OVER FUNCTION
                 }
                 else {
                     this.guessesRemaining = 10;
                     this.guesses = [];
-                    console.log("Next word!");
+                    console.log("Next word!".cyan);
                     this.nextWord();
                     this.promptForGuess();
                 }
