@@ -2,7 +2,7 @@ const Word = require("./Word");
 const inquirer = require("inquirer");
 const colors = require("colors");
 
-const testWords = ["apple", "banana", "orange"];
+const testWords = ["apple", "banana", "orange", "blue raspberry"];
 
 function WordGuess(wordList) {
     this.wordList = wordList;
@@ -52,6 +52,8 @@ function WordGuess(wordList) {
             else {
                 this.guessesRemaining--;
                 console.log("Wrong!!!!".red + "\nGuesses Remaining: " + this.guessesRemaining);
+
+                // User doesn't guess word
                 if(this.guessesRemaining <= 0) {
                     console.log("Game over!".red);
                     // TODO prompt to play again GAME OVER FUNCTION
@@ -66,6 +68,8 @@ function WordGuess(wordList) {
                 this.promptForGuess();
             }
             else {
+
+                // Game ends
                 if(this.wordList.length === 0) {
                     console.log("You won!".rainbow);
                     // TODO prompt to play again GAME OVER FUNCTION

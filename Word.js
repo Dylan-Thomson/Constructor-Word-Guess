@@ -1,6 +1,5 @@
 const Letter = require("./Letter");
 
-// TODO ALLOW FOR SPACES IN WORDS
 function Word(word) {
     // Create Letter object for each letter in word and store as array
     this.word = word.split("").map(letter => {

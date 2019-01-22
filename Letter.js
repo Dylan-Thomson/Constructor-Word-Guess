@@ -1,6 +1,11 @@
 function Letter(letter) {
     this.letter = letter;
-    this.isGuessed = false;
+    if(/\s/.test(letter)) { // Ignore letter if whitespace
+        this.isGuessed = true;
+    }
+    else { // Otherwise start as not guessed
+        this.isGuessed = false;
+    }
 
     // Returns letter if isGuessed, otherwise return placeholder
     this.toString = function() {
