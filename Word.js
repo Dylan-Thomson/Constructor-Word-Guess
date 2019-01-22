@@ -23,8 +23,8 @@ function Word(word) {
         return isCorrect;
     }
 
+    // Test whether every letter in word has been guessed
     this.isGuessed = function() {
-        // return !this.getWord().includes("_");
         let wordGuessed = true;
         this.word.forEach(letter => {
             if(!letter.isGuessed) {

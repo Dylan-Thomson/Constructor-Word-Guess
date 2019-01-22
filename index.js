@@ -27,6 +27,15 @@ function WordGuess(wordList) {
         console.log(this.currentWord.getWord().split("").join(" ").trim());
     }
 
+    // Get next word, reset guesses and prompt user for guess
+    this.promptNextWord = function() {
+        this.guessesRemaining = 10;
+        this.guesses = [];
+        console.log("Next word!".cyan);
+        this.nextWord();
+        this.promptForGuess();
+    }
+
     // Ask user to guess a letter and handle the result
     this.promptForGuess = function() {
         inquirer.prompt([
@@ -47,45 +56,41 @@ function WordGuess(wordList) {
         ]).then(input => {
             this.guesses.push(input.guess.toLowerCase());
 
+            // User correctly guesses a letter
             if(this.currentWord.guessLetter(input.guess)) {
                 console.log("Correct!".green);
             }
+            // Incorrect guess
             else {
                 this.guessesRemaining--;
                 console.log("Wrong!!!!".red + "\nGuesses Remaining: " + this.guessesRemaining);
 
-                // User doesn't guess word
+                // Out of guesses for current word, prompt for next word
                 if(this.guessesRemaining <= 0) {
                     console.log("Out of guesses".red);
                     this.incorrectWords++;
-                    this.guessesRemaining = 10;
-                    this.guesses = [];
-                    console.log("Next word!".cyan);
-                    this.nextWord();
-                    this.promptForGuess();
-                    return
+                    this.promptNextWord();
+                    // Break out of current prompt
+                    return 
                 }
             }
 
             this.displayCurrentWord();
 
-
-            // User guesses word
+            // User guesses entire word
             if(this.currentWord.isGuessed()) {
                 this.correctWords++
-                // Game ends
+
+                // Game ends when there are no more words
                 if(this.wordList.length === 0) {
                     console.log("GAME OVER!!!!".rainbow);
                     console.log("Correct words: " + this.correctWords);
                     console.log("Inorrect words: " + this.incorrectWords);
-                    // TODO prompt to play again GAME OVER FUNCTION
                 }
+                // Otherwise get the next word
                 else {
                     this.guessesRemaining = 10;
-                    this.guesses = [];
-                    console.log("Next word!".cyan);
-                    this.nextWord();
-                    this.promptForGuess();
+                    this.promptNextWord();
                 }
                 
             }
