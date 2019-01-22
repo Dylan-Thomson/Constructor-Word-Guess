@@ -3,7 +3,7 @@ const Letter = require("./Letter");
 function Word(word) {
     // Create Letter object for each letter in word and store as array
     this.word = word.split("").map(letter => {
-        return new Letter(letter.toLowerCase());
+        return new Letter(letter);
     });
 
     // Get string containing placeholders and correctly guessed Letters

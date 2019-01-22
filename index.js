@@ -1,13 +1,14 @@
 const Word = require("./Word");
 const inquirer = require("inquirer");
 const colors = require("colors");
-
-const testWords = ["apple", "banana", "orange", "blue raspberry"];
+const testWords = ["Hypertext Markup Langauge", "JavaScript"];
 
 function WordGuess(wordList) {
     this.wordList = wordList;
     this.guessesRemaining = 10;
     this.guesses = [];
+    this.correctWords = 0;
+    this.incorrectWords = 0;
 
     // Get random word and remove from word list
     this.nextWord = function() {
@@ -35,7 +36,7 @@ function WordGuess(wordList) {
                 type: "input",
                 validate: input => {
                     if(input.match(/[a-z]/i) && input.length === 1) {
-                        if(this.guesses.includes(input)) {
+                        if(this.guesses.includes(input.toLowerCase())) {
                             return "Already guessed!".red;
                         }
                         return true;
@@ -44,7 +45,7 @@ function WordGuess(wordList) {
                 }
             }
         ]).then(input => {
-            this.guesses.push(input.guess);
+            this.guesses.push(input.guess.toLowerCase());
 
             if(this.currentWord.guessLetter(input.guess)) {
                 console.log("Correct!".green);
@@ -55,8 +56,13 @@ function WordGuess(wordList) {
 
                 // User doesn't guess word
                 if(this.guessesRemaining <= 0) {
-                    console.log("Game over!".red);
-                    // TODO prompt to play again GAME OVER FUNCTION
+                    console.log("Out of guesses".red);
+                    this.incorrectWords++;
+                    this.guessesRemaining = 10;
+                    this.guesses = [];
+                    console.log("Next word!".cyan);
+                    this.nextWord();
+                    this.promptForGuess();
                     return
                 }
             }
@@ -64,14 +70,14 @@ function WordGuess(wordList) {
             this.displayCurrentWord();
 
 
-            if(!this.currentWord.isGuessed()) {
-                this.promptForGuess();
-            }
-            else {
-
+            // User guesses word
+            if(this.currentWord.isGuessed()) {
+                this.correctWords++
                 // Game ends
                 if(this.wordList.length === 0) {
-                    console.log("You won!".rainbow);
+                    console.log("GAME OVER!!!!".rainbow);
+                    console.log("Correct words: " + this.correctWords);
+                    console.log("Inorrect words: " + this.incorrectWords);
                     // TODO prompt to play again GAME OVER FUNCTION
                 }
                 else {
@@ -81,6 +87,10 @@ function WordGuess(wordList) {
                     this.nextWord();
                     this.promptForGuess();
                 }
+                
+            }
+            else {
+                this.promptForGuess();
             }
         });
     }

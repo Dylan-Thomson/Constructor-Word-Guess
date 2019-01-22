@@ -14,7 +14,7 @@ function Letter(letter) {
 
     // Set isGuessed to true if guess equals letter
     this.compare = function(guess) {
-        if(this.letter === guess.toLowerCase()) {
+        if(this.letter.toLowerCase() === guess.toLowerCase()) {
             this.isGuessed = true;
             return true;
         }
