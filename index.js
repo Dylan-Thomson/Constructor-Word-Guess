@@ -1,7 +1,9 @@
 const Word = require("./Word");
 const inquirer = require("inquirer");
 const colors = require("colors");
-const testWords = ["Hypertext Markup Langauge", "JavaScript"];
+
+
+const testWords = ["JavaScript"];
 
 function WordGuess(wordList) {
     this.wordList = wordList;
@@ -24,7 +26,7 @@ function WordGuess(wordList) {
 
     // Display current word with spaces in between for reability
     this.displayCurrentWord = function() {
-        console.log(this.currentWord.getWord().split("").join(" ").trim());
+        console.log(this.currentWord.toString());
     }
 
     // Get next word, reset guesses and prompt user for guess
@@ -81,11 +83,11 @@ function WordGuess(wordList) {
             if(this.currentWord.isGuessed()) {
                 this.correctWords++
 
-                // Game ends when there are no more words
+                // Game ends when there are no more words TODO MAYBE if(!nextWord())
                 if(this.wordList.length === 0) {
                     console.log("GAME OVER!!!!".rainbow);
-                    console.log("Correct words: " + this.correctWords);
-                    console.log("Inorrect words: " + this.incorrectWords);
+                    console.log(("Correct words: " + this.correctWords).green);
+                    console.log(("Inorrect words: " + this.incorrectWords).red);
                 }
                 // Otherwise get the next word
                 else {

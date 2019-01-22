@@ -34,6 +34,10 @@ function Word(word) {
         });
         return wordGuessed;
     }
+
+    this.toString = function() {
+        return this.getWord().split("").join(" ").trim();
+    }
 }
 
 function testWord(test) {
