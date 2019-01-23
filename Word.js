@@ -2,14 +2,19 @@ const Letter = require("./Letter");
 
 function Word(word) {
     // Create Letter object for each letter in word and store as array
-    this.word = word.split("").map(letter => {
+    this.word = Object.values(word)[0].split("").map(letter => {
         return new Letter(letter);
     });
+    this.hint = Object.keys(word)[0];
 
     // Get string containing placeholders and correctly guessed Letters
     this.getWord = function() {
         // Calls our toString on each letter object
         return this.word.join("");
+    }
+
+    this.getHint = function() {
+        return this.hint.magenta;
     }
 
     // Test a guess on all Letters in Word
@@ -35,8 +40,9 @@ function Word(word) {
         return wordGuessed;
     }
 
+    // Display word with placeholders for unguessed letters, as well as the hint
     this.toString = function() {
-        return this.getWord().split("").join(" ").trim();
+        return this.getHint() + "\n" + this.getWord().split("").join(" ").trim();
     }
 }
 

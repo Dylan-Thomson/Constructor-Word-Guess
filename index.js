@@ -1,16 +1,15 @@
 const Word = require("./Word");
 const inquirer = require("inquirer");
 const colors = require("colors");
+const words = require("./words");
 
-
-const testWords = ["JavaScript"];
-
-function WordGuess(wordList) {
+function WordGuess(wordList, rounds) {
     this.wordList = wordList;
     this.guessesRemaining = 10;
     this.guesses = [];
     this.correctWords = 0;
     this.incorrectWords = 0;
+    this.rounds = rounds;
 
     // Get random word and remove from word list
     this.nextWord = function() {
@@ -26,11 +25,12 @@ function WordGuess(wordList) {
 
     // Display current word with spaces in between for reability
     this.displayCurrentWord = function() {
-        console.log(this.currentWord.toString());
+        console.log(this.currentWord.toString()); //console.log doesnt automatically invoke toString which is wack
     }
 
     // Get next word, reset guesses and prompt user for guess
     this.promptNextWord = function() {
+        this.rounds--;
         this.guessesRemaining = 10;
         this.guesses = [];
         console.log("Next word!".cyan);
@@ -76,15 +76,15 @@ function WordGuess(wordList) {
                     return 
                 }
             }
-
+            console.log("Guesses: " + this.guesses.join(" "));
             this.displayCurrentWord();
 
             // User guesses entire word
             if(this.currentWord.isGuessed()) {
                 this.correctWords++
 
-                // Game ends when there are no more words TODO MAYBE if(!nextWord())
-                if(this.wordList.length === 0) {
+                // Game ends when there are no more words
+                if(this.wordList.length === 0 || this.rounds <= 1) {
                     console.log("GAME OVER!!!!".rainbow);
                     console.log(("Correct words: " + this.correctWords).green);
                     console.log(("Inorrect words: " + this.incorrectWords).red);
@@ -105,6 +105,6 @@ function WordGuess(wordList) {
 
 
 // Run Game
-let game = new WordGuess(testWords);
+let game = new WordGuess(words, 5);
 game.nextWord();
 game.promptForGuess();
