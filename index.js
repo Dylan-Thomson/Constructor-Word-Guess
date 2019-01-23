@@ -16,7 +16,6 @@ function WordGuess(wordList, rounds) {
         if(wordList.length > 0) {
             this.index = Math.floor(Math.random() * this.wordList.length - 1) + 1;
             this.currentWord = new Word(this.wordList.splice(this.index, 1)[0]);
-            this.displayCurrentWord();
             return this.currentWord;
         }
         console.log("Out of words".red);
@@ -35,7 +34,16 @@ function WordGuess(wordList, rounds) {
         this.guesses = [];
         console.log("Next word!".cyan);
         this.nextWord();
+        this.displayCurrentWord();
         this.promptForGuess();
+    }
+
+    // Called when beginning the game, get word, display it, and prompt for guess
+    this.start = function() {
+        this.nextWord();
+        this.displayCurrentWord();
+        this.promptForGuess();
+
     }
 
     // Ask user to guess a letter and handle the result
@@ -83,7 +91,7 @@ function WordGuess(wordList, rounds) {
             if(this.currentWord.isGuessed()) {
                 this.correctWords++
 
-                // Game ends when there are no more words
+                // Game ends when there are no more words TODO MAYBE if(!nextWord())
                 if(this.wordList.length === 0 || this.rounds <= 1) {
                     console.log("GAME OVER!!!!".rainbow);
                     console.log(("Correct words: " + this.correctWords).green);
@@ -103,8 +111,6 @@ function WordGuess(wordList, rounds) {
     }
 }
 
-
 // Run Game
 let game = new WordGuess(words, 5);
-game.nextWord();
-game.promptForGuess();
+game.start();

@@ -46,16 +46,4 @@ function Word(word) {
     }
 }
 
-function testWord(test) {
-    test = new Word(test);
-    test.guessLetter("h");
-    console.log(test.getWord());
-    test.guessLetter("e");
-    console.log(test.getWord());
-    test.guessLetter("L");
-    console.log(test.getWord());
-    test.guessLetter("o");
-    console.log(test.getWord());
-}
-
 module.exports = Word;

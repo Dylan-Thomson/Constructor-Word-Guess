@@ -22,13 +22,5 @@ function Letter(letter) {
     }
 }
 
-function testLetter() {
-    const a = new Letter("a");
-    console.log(a.getLetter());
-    a.compare("b");
-    console.log(a.getLetter());
-    a.compare("A");
-    console.log(a.getLetter());
-}
 
 module.exports = Letter;
